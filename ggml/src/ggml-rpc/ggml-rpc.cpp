@@ -769,8 +769,11 @@ void ggml_backend_rpc_get_device_memory(const char * endpoint, size_t * free, si
 
 // RPC server-side implementation
 
+// TODO: Modify graph_compute() to only load and process tensors within the specified layer range
+
 class rpc_server {
 public:
+    // ToDo : Add layer range to the constructor
     rpc_server(ggml_backend_t backend) : backend(backend) {}
     ~rpc_server();
 
@@ -788,6 +791,7 @@ public:
     bool get_alloc_size(const rpc_msg_get_alloc_size_req & request, rpc_msg_get_alloc_size_rsp & response);
 
 private:
+    // ToDo : Add layer range fields
     ggml_tensor * deserialize_tensor(struct ggml_context * ctx, const rpc_tensor * tensor);
     ggml_tensor * create_node(uint64_t id,
                               struct ggml_context * ctx,
@@ -1334,6 +1338,7 @@ static void rpc_serve_client(ggml_backend_t backend, sockfd_t sockfd, size_t fre
     }
 }
 
+// ToDo : Add layer range to the parameters
 void ggml_backend_rpc_start_server(ggml_backend_t backend, const char * endpoint, size_t free_mem, size_t total_mem) {
     std::string host;
     int port;

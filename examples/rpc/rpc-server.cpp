@@ -29,8 +29,11 @@ struct rpc_server_params {
     std::string host        = "127.0.0.1";
     int         port        = 50052;
     size_t      backend_mem = 0;
+    // TODO: Add start_layer and end_layer parameters here to specify layer range for loading
+
 };
 
+//ToDo : add help for layer range params
 static void print_usage(int /*argc*/, char ** argv, rpc_server_params params) {
     fprintf(stderr, "Usage: %s [options]\n\n", argv[0]);
     fprintf(stderr, "options:\n");
@@ -40,7 +43,7 @@ static void print_usage(int /*argc*/, char ** argv, rpc_server_params params) {
     fprintf(stderr, "  -m MEM, --mem MEM     backend memory size (in MB)\n");
     fprintf(stderr, "\n");
 }
-
+// ToDo : add the parsing for layer range params
 static bool rpc_server_params_parse(int argc, char ** argv, rpc_server_params & params) {
     std::string arg;
     for (int i = 1; i < argc; i++) {
@@ -165,6 +168,7 @@ int main(int argc, char * argv[]) {
         get_backend_memory(&free_mem, &total_mem);
     }
     printf("Starting RPC server on %s, backend memory: %zu MB\n", endpoint.c_str(), free_mem / (1024 * 1024));
+    // ToDo : Add the layer range params
     ggml_backend_rpc_start_server(backend, endpoint.c_str(), free_mem, total_mem);
     ggml_backend_free(backend);
     return 0;

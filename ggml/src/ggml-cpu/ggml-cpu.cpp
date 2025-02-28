@@ -32,6 +32,7 @@
 #endif
 
 // ggml-backend interface
+// TODO: Extend backend initialization to respect layer range boundaries when allocating memory
 
 std::vector<ggml_backend_buffer_type_t>& ggml_backend_cpu_get_extra_buffers_type() {
     static std::vector<ggml_backend_buffer_type_t> bufts = []() {
